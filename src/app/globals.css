@@ -1,51 +1,62 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #09090b;
-  --color-foreground: #fafafa;
-  
-  --color-muted: #27272a;
+  --color-background: #030305;
+  --color-foreground: #ffffff;
+  --color-muted: #18181b;
   --color-muted-foreground: #a1a1aa;
-  
-  --color-primary: #3b82f6; /* Blue 500 */
-  --color-primary-foreground: #ffffff;
-  
-  --color-secondary: #27272a;
-  --color-secondary-foreground: #fafafa;
-  
-  --color-accent: #6366f1; /* Indigo 500 */
-  --color-accent-foreground: #ffffff;
-  
-  --color-destructive: #ef4444; /* Red 500 */
-  --color-success: #22c55e; /* Green 500 */
-
-  --radius-lg: 0.5rem;
-  --radius-md: calc(0.5rem - 2px);
-  --radius-sm: calc(0.5rem - 4px);
 }
 
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
-  :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    /* other vars are mapped in layout.tsx via classes or just relying on dark utilities */
-  }
-
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    @apply antialiased min-h-screen font-sans;
+    @apply antialiased min-h-screen text-zinc-300;
   }
 }
 
-/* Glassmorphism utilities */
 @layer utilities {
-  .glass {
-    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  .glass-panel {
+    @apply bg-black/40 backdrop-blur-2xl border border-white/[0.08] shadow-2xl;
   }
-  .glass-card {
-    @apply bg-[#121214]/80 backdrop-blur-xl border border-white/5 shadow-2xl;
+
+  /* Animated glowing button */
+  .btn-premium {
+    position: relative;
+    background: linear-gradient(145deg, rgba(20,20,30,0.8), rgba(10,10,15,0.9));
+    @apply border border-indigo-500/20 text-indigo-100 font-medium overflow-hidden transition-all duration-500;
+  }
+  
+  .btn-premium::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(99,102,241,0.2) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  
+  .btn-premium:hover::before {
+    opacity: 1;
+  }
+  
+  .btn-premium:hover {
+    @apply border-indigo-400/40 shadow-[0_0_30px_rgba(99,102,241,0.15)] -translate-y-[1px];
+  }
+
+  /* Sleek scrollbar for logs Feed */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-zinc-800 rounded-full;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-zinc-700;
   }
 }
